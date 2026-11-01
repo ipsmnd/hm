@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Monuments - Historical Monuments of India</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://use.typekit.net/yjp3aho.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: "sofia-pro", sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div id="navbar-container" data-source="components/navbar.html"></div>
+
+  <!-- Page Header -->
+  <section data-id="page-header" class="bg-gradient-to-r from-orange-600 to-red-600 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 data-id="page-title" class="text-4xl lg:text-5xl font-bold mb-4">
+        Historical Monuments
+      </h1>
+      <p data-id="page-description" class="text-xl opacity-90">
+        Explore India's rich heritage through our comprehensive collection
+      </p>
+    </div>
+  </section>
+
+  <!-- Filters and Search -->
+  <section data-id="filters-section" class="py-8 bg-white border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+        <div class="flex flex-wrap gap-4 items-center">
+          <select data-id="state-filter-monuments" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+            <option value="">All States</option>
+          </select>
+          <select data-id="period-filter-monuments" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+            <option value="">All Periods</option>
+          </select>
+          <select data-id="type-filter-monuments" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+            <option value="">All Types</option>
+          </select>
+          <button data-id="reset-filters-btn" class="px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
+            Reset Filters
+          </button>
+        </div>
+        
+        <div class="relative">
+          <input data-id="monuments-search-input" type="text" placeholder="Search monuments..." class="w-64 px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+          <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Section -->
+  <section data-id="results-section" class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Results Header -->
+      <div data-id="results-header" class="flex flex-col sm:flex-row justify-between items-center mb-8">
+        <div>
+          <h2 data-id="results-count" class="text-2xl font-bold text-gray-900">
+            Loading monuments...
+          </h2>
+          <p data-id="results-subtitle" class="text-gray-600 mt-1">
+            Discover India's architectural heritage
+          </p>
+        </div>
+        
+        <div class="flex items-center gap-4 mt-4 sm:mt-0">
+          <span class="text-sm text-gray-500">Sort by:</span>
+          <select data-id="sort-select" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-orange-500">
+            <option value="name">Name</option>
+            <option value="state">State</option>
+            <option value="period">Period</option>
+            <option value="popularity">Popularity</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Monuments Grid -->
+      <div data-id="monuments-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="monuments-container">
+        <!-- Monuments will be loaded here -->
+      </div>
+
+      <!-- Loading Indicator -->
+      <div data-id="loading-indicator" class="text-center py-12 hidden">
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+        <p class="mt-2 text-gray-600">Loading monuments...</p>
+      </div>
+
+      <!-- No Results -->
+      <div data-id="no-results" class="text-center py-12 hidden">
+        <i data-lucide="search-x" class="h-16 w-16 text-gray-400 mx-auto mb-4"></i>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No monuments found</h3>
+        <p class="text-gray-600">Try adjusting your search criteria</p>
+      </div>
+
+      <!-- Pagination -->
+      <div data-id="pagination" class="mt-12 flex justify-center">
+        <nav class="flex space-x-2" id="pagination-container">
+          <!-- Pagination will be generated here -->
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-container" data-source="components/footer.html"></div>
+  <div id="badge-container" data-source="components/badge.html"></div>
+
+  <script type="module">
+    import { loadComponent } from './scripts/components/loader.js';
+    import { initializeMonuments } from './scripts/pages/monuments.js';
+    
+    // Load all shared components
+    await loadComponent('#navbar-container');
+    await loadComponent('#footer-container');
+    await loadComponent('#badge-container');
+    
+    // Initialize page functionality
+    initializeMonuments();
+    
+    // Initialize icons after components are loaded
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monument Details - Historical Monuments of India</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://use.typekit.net/yjp3aho.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: "sofia-pro", sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div id="navbar-container" data-source="components/navbar.html"></div>
+
+  <!-- Monument Hero -->
+  <section data-id="monument-hero" class="relative h-96 lg:h-[500px] overflow-hidden">
+    <img data-id="monument-hero-image" src="" alt="" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-12 text-white">
+      <div class="max-w-4xl">
+        <h1 data-id="monument-title" class="text-4xl lg:text-6xl font-bold mb-4">
+          Loading...
+        </h1>
+        <div class="flex flex-wrap gap-4 items-center text-lg">
+          <span data-id="monument-location" class="flex items-center">
+            <i data-lucide="map-pin" class="h-5 w-5 mr-2"></i>
+            Loading...
+          </span>
+          <span data-id="monument-period" class="flex items-center">
+            <i data-lucide="calendar" class="h-5 w-5 mr-2"></i>
+            Loading...
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Monument Details -->
+  <section data-id="monument-details" class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-3 gap-12">
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <!-- Description -->
+          <div data-id="description-section" class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">About This Monument</h2>
+            <div data-id="monument-description" class="prose prose-lg max-w-none text-gray-700">
+              Loading description...
+            </div>
+          </div>
+
+          <!-- Image Gallery -->
+          <div data-id="gallery-section" class="mb-12">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Gallery</h3>
+            <div data-id="image-gallery" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <!-- Gallery images will be loaded here -->
+            </div>
+          </div>
+
+          <!-- Historical Significance -->
+          <div data-id="history-section" class="mb-12">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Historical Significance</h3>
+            <div data-id="historical-significance" class="text-gray-700 leading-relaxed">
+              Loading historical information...
+            </div>
+          </div>
+
+          <!-- Architecture -->
+          <div data-id="architecture-section" class="mb-12">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Architecture</h3>
+            <div data-id="architecture-details" class="text-gray-700 leading-relaxed">
+              Loading architectural details...
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="lg:col-span-1">
+          <!-- Quick Info -->
+          <div data-id="quick-info" class="bg-white rounded-lg shadow-sm p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Quick Information</h3>
+            <div class="space-y-4">
+              <div data-id="info-location">
+                <span class="font-semibold text-gray-700">Location:</span>
+                <span data-id="detail-location" class="block text-gray-600">Loading...</span>
+              </div>
+              <div data-id="info-built">
+                <span class="font-semibold text-gray-700">Built:</span>
+                <span data-id="detail-built" class="block text-gray-600">Loading...</span>
+              </div>
+              <div data-id="info-builder">
+                <span class="font-semibold text-gray-700">Built by:</span>
+                <span data-id="detail-builder" class="block text-gray-600">Loading...</span>
+              </div>
+              <div data-id="info-type">
+                <span class="font-semibold text-gray-700">Type:</span>
+                <span data-id="detail-type" class="block text-gray-600">Loading...</span>
+              </div>
+              <div data-id="info-unesco">
+                <span class="font-semibold text-gray-700">UNESCO Site:</span>
+                <span data-id="detail-unesco" class="block text-gray-600">Loading...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visiting Information -->
+          <div data-id="visiting-info" class="bg-white rounded-lg shadow-sm p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Visiting Information</h3>
+            <div class="space-y-4">
+              <div data-id="visiting-hours">
+                <span class="font-semibold text-gray-700">Opening Hours:</span>
+                <span data-id="detail-hours" class="block text-gray-600">Loading...</span>
+              </div>
+              <div data-id="entry-fee">
+                <span class="font-semibold text-gray-700">Entry Fee:</span>
+                <span data-id="detail-fee" class="block text-gray-600">Loading...</span>
+              </div>
+              <div data-id="best-time">
+                <span class="font-semibold text-gray-700">Best Time to Visit:</span>
+                <span data-id="detail-best-time" class="block text-gray-600">Loading...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Share -->
+          <div data-id="share-section" class="bg-white rounded-lg shadow-sm p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Share</h3>
+            <div class="flex space-x-3">
+              <button data-id="share-facebook" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                Facebook
+              </button>
+              <button data-id="share-twitter" class="flex-1 bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                Twitter
+              </button>
+              <button data-id="share-copy" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                Copy Link
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Monuments -->
+  <section data-id="related-monuments" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Related Monuments</h2>
+      <div data-id="related-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="related-monuments">
+        <!-- Related monuments will be loaded here -->
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-container" data-source="components/footer.html"></div>
+  <div id="badge-container" data-source="components/badge.html"></div>
+
+  <script type="module">
+    import { loadComponent } from './scripts/components/loader.js';
+    import { initializeMonumentDetail } from './scripts/pages/monument-detail.js';
+    
+    // Load all shared components
+    await loadComponent('#navbar-container');
+    await loadComponent('#footer-container');
+    await loadComponent('#badge-container');
+    
+    // Initialize page functionality
+    initializeMonumentDetail();
+    
+    // Initialize icons after components are loaded
+    lucide.createIcons();
+  </script>
+</body>
+</html>
