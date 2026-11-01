@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Best Tourist Places in India</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a6bb3 0%, #0c4a8f 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover {
+            background-color: #f0f5ff;
+            border-color: #1a6bb3;
+        }
+        
+        .filter-btn.active {
+            background-color: #1a6bb3;
+            color: white;
+            border-color: #1a6bb3;
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            padding-left: 3rem;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .gallery-content {
+            padding: 1.2rem;
+        }
+        
+        .gallery-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #1a6bb3;
+        }
+        
+        .gallery-content p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        
+        .gallery-content .location {
+            display: flex;
+            align-items: center;
+            color: #888;
+            font-size: 0.85rem;
+        }
+        
+        .gallery-content .location i {
+            margin-right: 0.5rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .modal-content {
+            background-color: white;
+            max-width: 900px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 101;
+            font-size: 1.2rem;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .modal-details {
+            padding: 2rem;
+        }
+        
+        .modal-details h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #1a6bb3;
+        }
+        
+        .modal-details .location {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .modal-details .location i {
+            margin-right: 0.5rem;
+        }
+        
+        .modal-details p {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .modal-details .best-time {
+            background-color: #f0f5ff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-details .best-time h4 {
+            margin-bottom: 0.5rem;
+            color: #1a6bb3;
+        }
+        
+        footer {
+            background-color: #1a3b5c;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .modal-image {
+                height: 300px;
+            }
+            
+            .modal-details {
+                padding: 1.5rem;
+            }
+            
+            .modal-details h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>100 Best Tourist Places in India</h1>
+        <p>Discover the incredible diversity of India through its most beautiful destinations</p>
+    </header>
+    
+    <div class="container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Search for a destination...">
+        </div>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="north">North India</button>
+            <button class="filter-btn" data-filter="south">South India</button>
+            <button class="filter-btn" data-filter="east">East India</button>
+            <button class="filter-btn" data-filter="west">West India</button>
+            <button class="filter-btn" data-filter="heritage">Heritage</button>
+            <button class="filter-btn" data-filter="beach">Beaches</button>
+            <button class="filter-btn" data-filter="mountain">Mountains</button>
+        </div>
+        
+        <div class="gallery" id="gallery">
+            <!-- Gallery items will be generated by JavaScript -->
+        </div>
+    </div>
+    
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-close" id="modal-close">
+                <i class="fas fa-times"></i>
+            </div>
+            <img class="modal-image" id="modal-image" src="" alt="">
+            <div class="modal-details">
+                <h2 id="modal-title"></h2>
+                <div class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="modal-location"></span>
+                </div>
+                <p id="modal-description"></p>
+                <div class="best-time">
+                    <h4>Best Time to Visit</h4>
+                    <p id="modal-time"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 India Tourism | Explore the Incredible India</p>
+    </footer>
+
+    <script>
+        // Sample data for tourist places (in a real application, this would come from a database)
+        const touristPlaces = [
+            {
+                id: 1,
+                name: "Taj Mahal",
+                location: "Agra, Uttar Pradesh",
+                image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3",
+                description: "An ivory-white marble mausoleum on the south bank of the Yamuna river in the Indian city of Agra. It was commissioned in 1632 by the Mughal emperor Shah Jahan to house the tomb of his favorite wife, Mumtaz Mahal.",
+                bestTime: "October to March",
+                tags: ["north", "heritage"]
+            },
+            {
+                id: 2,
+                name: "Varanasi Ghats",
+                location: "Varanasi, Uttar Pradesh",
+                image: "https://images.unsplash.com/photo-1532664189809-02133fee698d?ixlib=rb-4.0.3",
+                description: "Varanasi is one of the world's oldest continually inhabited cities. The ghats of Varanasi are riverfront steps leading to the banks of the River Ganges, used for bathing and religious ceremonies.",
+                bestTime: "October to March",
+                tags: ["north", "heritage"]
+            },
+            {
+                id: 3,
+                name: "Backwaters of Kerala",
+                location: "Kerala",
+                image: "https://images.unsplash.com/photo-1580576176136-7c35a1c3150d?ixlib=rb-4.0.3",
+                description: "A network of brackish lagoons and lakes lying parallel to the Arabian Sea coast. Houseboat cruises through the backwaters are a popular tourist activity.",
+                bestTime: "September to March",
+                tags: ["south", "beach"]
+            },
+            {
+                id: 4,
+                name: "Goa Beaches",
+                location: "Goa",
+                image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?ixlib=rb-4.0.3",
+                description: "Famous for its pristine beaches, Portuguese heritage, churches, and temples. Goa is known for its vibrant nightlife and seafood cuisine.",
+                bestTime: "November to February",
+                tags: ["west", "beach"]
+            },
+            {
+                id: 5,
+                name: "Jaipur City Palace",
+                location: "Jaipur, Rajasthan",
+                image: "https://images.unsplash.com/photo-1532664189809-02133fee698d?ixlib=rb-4.0.3",
+                description: "The City Palace is a palace complex in Jaipur, which includes the Chandra Mahal and Mubarak Mahal palaces and other buildings. It was the seat of the Maharaja of Jaipur.",
+                bestTime: "October to March",
+                tags: ["north", "heritage"]
+            },
+            {
+                id: 6,
+                name: "Mysore Palace",
+                location: "Mysore, Karnataka",
+                image: "https://images.unsplash.com/photo-1596978298357-676a7a57e7b8?ixlib=rb-4.0.3",
+                description: "A historical palace and the royal residence at Mysore in the Indian state of Karnataka. It is the official residence of the Wadiyar dynasty and the seat of the Kingdom of Mysore.",
+                bestTime: "July to March",
+                tags: ["south", "heritage"]
+            },
+            {
+                id: 7,
+                name: "Darjeeling Tea Gardens",
+                location: "Darjeeling, West Bengal",
+                image: "https://images.unsplash.com/photo-1591378603223-e15b45a81640?ixlib=rb-4.0.3",
+                description: "Famous for its tea industry, the views of Kangchenjunga, the world's third-highest mountain, and the Darjeeling Himalayan Railway, a UNESCO World Heritage Site.",
+                bestTime: "March to May, October to November",
+                tags: ["east", "mountain"]
+            },
+            {
+                id: 8,
+                name: "Hawa Mahal",
+                location: "Jaipur, Rajasthan",
+                image: "https://images.unsplash.com/photo-1587334274527-ba54f0b5a357?ixlib=rb-4.0.3",
+                description: "The Hawa Mahal is a palace in Jaipur, India. Made with the red and pink sandstone, the palace sits on the edge of the City Palace, and extends to the Zenana, or women's chambers.",
+                bestTime: "October to March",
+                tags: ["north", "heritage"]
+            },
+            {
+                id: 9,
+                name: "Amer Fort",
+                location: "Jaipur, Rajasthan",
+                image: "https://images.unsplash.com/photo-1565953558265-1df3e6f16c55?ixlib=rb-4.0.3",
+                description: "Amer Fort is a fort located in Amer, Rajasthan, India. Amer is a town with an area of 4 square kilometres located 11 kilometres from Jaipur, the capital of Rajasthan.",
+                bestTime: "October to March",
+                tags: ["north", "heritage"]
+            },
+            {
+                id: 10,
+                name: "Gateway of India",
+                location: "Mumbai, Maharashtra",
+                image: "https://images.unsplash.com/photo-1582597332288-6785a57374c4?ixlib=rb-4.0.3",
+                description: "An arch-monument built in the early twentieth century in Mumbai, to commemorate the landing of King-Emperor George V, the first British monarch to visit India, in December 1911.",
+                bestTime: "October to March",
+                tags: ["west", "heritage"]
+            }
+            // In a real application, we would have 90 more items here
+        ];
+
+        // DOM elements
+        const gallery = document.getElementById('gallery');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const searchInput = document.getElementById('search-input');
+        const modal = document.getElementById('modal');
+        const modalClose = document.getElementById('modal-close');
+        const modalImage = document.getElementById('modal-image');
+        const modalTitle = document.getElementById('modal-title');
+        const modalLocation = document.getElementById('modal-location');
+        const modalDescription = document.getElementById('modal-description');
+        const modalTime = document.getElementById('modal-time');
+
+        // Display all places initially
+        displayPlaces(touristPlaces);
+
+        // Filter functionality
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                if (filter === 'all') {
+                    displayPlaces(touristPlaces);
+                } else {
+                    const filteredPlaces = touristPlaces.filter(place => 
+                        place.tags.includes(filter)
+                    );
+                    displayPlaces(filteredPlaces);
+                }
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            const filteredPlaces = touristPlaces.filter(place => 
+                place.name.toLowerCase().includes(searchTerm) || 
+                place.location.toLowerCase().includes(searchTerm) ||
+                place.description.toLowerCase().includes(searchTerm)
+            );
+            
+            displayPlaces(filteredPlaces);
+        });
+
+        // Modal functionality
+        function openModal(place) {
+            modalImage.src = place.image;
+            modalImage.alt = place.name;
+            modalTitle.textContent = place.name;
+            modalLocation.textContent = place.location;
+            modalDescription.textContent = place.description;
+            modalTime.textContent = place.bestTime;
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        modalClose.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Function to display places in the gallery
+        function displayPlaces(places) {
+            gallery.innerHTML = '';
+            
+            if (places.length === 0) {
+                gallery.innerHTML = '<p class="no-results">No destinations found. Try a different search.</p>';
+                return;
+            }
+            
+            places.forEach(place => {
+                const placeElement = document.createElement('div');
+                placeElement.classList.add('gallery-item');
+                placeElement.innerHTML = `
+                    <img src="${place.image}" alt="${place.name}" class="gallery-image">
+                    <div class="gallery-content">
+                        <h3>${place.name}</h3>
+                        <p>${place.description.substring(0, 100)}...</p>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${place.location}</span>
+                        </div>
+                    </div>
+                `;
+                
+                placeElement.addEventListener('click', () => openModal(place));
+                
+                gallery.appendChild(placeElement);
+            });
+        }
+    </script>
+</body>
+</html>
