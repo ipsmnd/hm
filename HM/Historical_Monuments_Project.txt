@@ -1,0 +1,54 @@
+# Unzip the uploaded file, add a simple "updated page" file, create a new zip, and list the files.
+import zipfile, os, datetime, shutil, io, sys
+
+input_zip_path = "/mnt/data/Historical_Monuments_Project_Report_Overview.zip"
+work_dir = "/mnt/data/Historical_Monuments_Project_Report_Overview_extracted"
+output_zip_path = "/mnt/data/Historical_Monuments_Project_Report_Overview_updated.zip"
+
+# Clean up previous run if exists
+if os.path.exists(work_dir):
+    shutil.rmtree(work_dir)
+os.makedirs(work_dir, exist_ok=True)
+
+# Extract input zip
+with zipfile.ZipFile(input_zip_path, 'r') as zin:
+    zin.extractall(work_dir)
+    extracted_list = zin.namelist()
+
+# Create an "updated_pages" folder and add a sample updated page
+updated_dir = os.path.join(work_dir, "updated_pages")
+os.makedirs(updated_dir, exist_ok=True)
+
+timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+update_note = f"Pages updated on {timestamp} (Asia/Kolkata timezone assumed).\n\nThis is a placeholder updated page created by the assistant. Replace or edit as needed.\n\n- Change summary:\n  * Added this 'updated_page1.txt' as an example of a new/updated page.\n\nIf you want specific edits inside existing documents (PDFs, DOCX, HTML), tell me which file and what changes and I will try to apply them.\n"
+updated_file_path = os.path.join(updated_dir, "updated_page1.txt")
+with open(updated_file_path, "w", encoding="utf-8") as f:
+    f.write(update_note)
+
+# Also add an update log in the root of the archive
+log_path = os.path.join(work_dir, "update_log.txt")
+with open(log_path, "w", encoding="utf-8") as f:
+    f.write(f"Update performed on {timestamp}\nFiles extracted from original zip:\n")
+    for name in extracted_list:
+        f.write(f"- {name}\n")
+    f.write("\nAdded:\n- updated_pages/updated_page1.txt\n")
+
+# Create a new zip with the modifications
+with zipfile.ZipFile(output_zip_path, 'w', zipfile.ZIP_DEFLATED) as zout:
+    for root, dirs, files in os.walk(work_dir):
+        for file in files:
+            abs_path = os.path.join(root, file)
+            rel_path = os.path.relpath(abs_path, work_dir)
+            zout.write(abs_path, rel_path)
+
+# Show results
+result = {
+    "original_zip": input_zip_path,
+    "extracted_to": work_dir,
+    "extracted_files_count": len(extracted_list),
+    "added_files": ["updated_pages/updated_page1.txt", "update_log.txt"],
+    "output_zip": output_zip_path,
+    "output_size_bytes": os.path.getsize(output_zip_path)
+}
+result, extracted_list[:50]  # show up to first 50 entries
+

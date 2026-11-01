@@ -1,0 +1,119 @@
+index.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>100 Best Tourist Places to Visit in India — Image Gallery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="title">
+        <div>
+          <h1>100 Best Tourist Places to Visit in India</h1>
+          <div class="subtitle">Search • Filter by State • View in Lightbox • Lazy-loaded grid</div>
+        </div>
+        <div class="stats" id="stats">Showing 0 of 0</div>
+      </div>
+
+      <div class="controls">
+        <input id="search" class="input" type="search" placeholder="Search places… (e.g., Taj Mahal, Goa, Ladakh)" />
+        <select id="stateFilter"></select>
+        <select id="sort">
+          <option value="name-asc">Sort: A → Z</option>
+          <option value="name-desc">Sort: Z → A</option>
+          <option value="state-asc">Sort: State A → Z</option>
+          <option value="state-desc">Sort: State Z → A</option>
+        </select>
+        <button id="reset" class="btn">Reset</button>
+      </div>
+
+      <div class="tags" id="quickTags"></div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid" id="grid" aria-live="polite"></section>
+  </main>
+
+  <dialog id="lightbox">
+    <div class="lightbox-head">
+      <strong id="lbTitle">Preview</strong>
+      <button class="x" id="lbClose" title="Close" aria-label="Close">✕</button>
+    </div>
+    <div class="lightbox-body">
+      <img id="lbImg" class="lightbox-img" alt="Preview" />
+      <p id="lbCaption"></p>
+    </div>
+  </dialog>
+
+  <footer class="footer">Made with ❤️ using vanilla HTML, CSS & JS. Images are fetched dynamically from Unsplash by keyword and may vary per load.</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+```
+
+style.css
+```css
+:root{
+  --bg:#0f172a; --panel:#111827; --soft:#1f2937; --muted:#94a3b8; --text:#e5e7eb; --accent:#38bdf8; --accent-2:#a78bfa;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui;background:linear-gradient(180deg,#0b1227 0%, #0f172a 70%);color:var(--text)}
+header{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:rgba(15,23,42,.7);border-bottom:1px solid #1f2937}
+.wrap{max-width:1200px;margin:auto;padding:18px 16px}
+.title{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:space-between}
+h1{font-size:clamp(20px,2.6vw,30px);margin:0}
+.subtitle{color:var(--muted);font-size:14px}
+.controls{display:grid;grid-template-columns:1fr 160px 140px 120px;gap:10px;margin-top:12px}
+@media(max-width:720px){.controls{grid-template-columns:1fr 1fr}}
+.input,select,button{background:var(--soft);color:var(--text);border:1px solid #233049;border-radius:12px;padding:10px 12px;font-size:14px;outline:none}
+button{cursor:pointer}
+.btn:hover{border-color:#2f3f66}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tag{background:#0b2546;border:1px solid #183359;color:#9bd2ff;padding:6px 10px;border-radius:999px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}
+.card{position:relative;overflow:hidden;border-radius:16px;background:var(--panel);border:1px solid #1f2a43;min-height:200px;opacity:0;translate:0 10px;transition:opacity .4s,translate .4s}
+.card.visible{opacity:1;translate:0 0}
+.card img{width:100%;height:220px;object-fit:cover;display:block;background:#0b1227}
+.content{padding:12px}
+.place{font-weight:700;font-size:15px;margin:0 0 6px}
+.state{font-size:12px;color:#c7d2fe}
+.chip{position:absolute;top:10px;left:10px;background:rgba(2,6,23,.7);color:#e2e8f0;padding:4px 8px;border-radius:999px;border:1px solid #1e293b;font-size:12px}
+.overlay{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,transparent 40%,rgba(2,6,23,.8));opacity:0;transition:.2s}
+.card:hover .overlay{opacity:1}
+.view-btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:black;font-weight:700;border:none;padding:10px 14px;border-radius:999px;cursor:pointer}
+dialog#lightbox{width:min(1000px,96vw);border:none;padding:0;border-radius:16px;background:#020617;color:var(--text)}
+dialog::backdrop{background:rgba(2,6,23,.75)}
+.lightbox-head{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid #1f2937}
+.lightbox-body{padding:12px}
+.lightbox-img{width:100%;height:70vh;object-fit:cover;display:block;background:#0b1227}
+.x{background:transparent;border:none;color:var(--text);font-size:22px;cursor:pointer}
+.footer{text-align:center;color:var(--muted);padding:24px 8px}
+```
+
+script.js
+```javascript
+const PLACES = [["Taj Mahal","Uttar Pradesh"],["Jaipur","Rajasthan"],["Varanasi","Uttar Pradesh"],["Goa Beaches","Goa"],["Kerala Backwaters","Kerala"],["Mysore Palace","Karnataka"],["Leh-Ladakh","Ladakh"],["Darjeeling","West Bengal"],["Ranthambore National Park","Rajasthan"],["Hampi","Karnataka"],["Udaipur","Rajasthan"],["Kaziranga National Park","Assam"],["Rishikesh","Uttarakhand"],["Manali","Himachal Pradesh"],["Shimla","Himachal Pradesh"],["Golden Temple","Punjab"],["Andaman & Nicobar Islands","Andaman & Nicobar"],["Khajuraho Temples","Madhya Pradesh"],["Ellora Caves","Maharashtra"],["Ajanta Caves","Maharashtra"],["Sundarbans","West Bengal"],["Konark Sun Temple","Odisha"],["Mahabalipuram","Tamil Nadu"],["Puducherry","Puducherry"],["Ooty","Tamil Nadu"],["Kodaikanal","Tamil Nadu"],["Coorg","Karnataka"],["Chikmagalur","Karnataka"],["Shillong","Meghalaya"],["Gangtok","Sikkim"],["Lonavala & Khandala","Maharashtra"],["Mount Abu","Rajasthan"],["Bodh Gaya","Bihar"],["Jaisalmer","Rajasthan"],["Rann of Kutch","Gujarat"],["Gir National Park","Gujarat"],["Dwarka","Gujarat"],["Somnath","Gujarat"],["Mahabodhi Temple","Bihar"],["Nalanda","Bihar"],["Sanchi Stupa","Madhya Pradesh"],["Bhopal","Madhya Pradesh"],["Lucknow","Uttar Pradesh"],["Prayagraj","Uttar Pradesh"],["Cherrapunji","Meghalaya"],["Mawsynram","Meghalaya"],["Valley of Flowers","Uttarakhand"],["Haridwar","Uttarakhand"],["Badrinath","Uttarakhand"],["Kedarnath","Uttarakhand"],["Yamunotri","Uttarakhand"],["Gangotri","Uttarakhand"],["Gulmarg","Jammu & Kashmir"],["Pahalgam","Jammu & Kashmir"],["Srinagar","Jammu & Kashmir"],["Dalhousie","Himachal Pradesh"],["Khajjiar","Himachal Pradesh"],["Spiti Valley","Himachal Pradesh"],["Auli","Uttarakhand"],["Amarnath Cave","Jammu & Kashmir"],["Vaishno Devi","Jammu & Kashmir"],["Meenakshi Temple","Tamil Nadu"],["Rameswaram","Tamil Nadu"],["Kanyakumari","Tamil Nadu"],["Chennai","Tamil Nadu"],["Hyderabad","Telangana"],["Charminar","Telangana"],["Golconda Fort","Telangana"],["Warangal","Telangana"],["Bhubaneswar","Odisha"],["Puri","Odisha"],["Chilika Lake","Odisha"],["Gopalpur","Odisha"],["Patna","Bihar"],["Rajgir","Bihar"],["Hornbill Festival","Nagaland"],["Imphal","Manipur"],["Agartala","Tripura"],["Aizawl","Mizoram"],["Itanagar","Arunachal Pradesh"],["Tawang","Arunachal Pradesh"],["Ziro Valley","Arunachal Pradesh"],["Majuli Island","Assam"],["Dibrugarh","Assam"],["Tezpur","Assam"],["Silchar","Assam"],["Lucknow Residency","Uttar Pradesh"],["Kanpur","Uttar Pradesh"],["Mathura-Vrindavan","Uttar Pradesh"],["Sanchi","Madhya Pradesh"],["Gwalior Fort","Madhya Pradesh"],["Indore","Madhya Pradesh"],["Ahmedabad","Gujarat"],["Statue of Unity","Gujarat"],["Junagadh","Gujarat"],["Porbandar","Gujarat"],["Mandvi Beach","Gujarat"],["Lakshadweep Islands","Lakshadweep"],["Rumtek Monastery","Sikkim"],["Nainital","Uttarakhand"],["Mussoorie","Uttarakhand"],["Jim Corbett National Park","Uttarakhand"]];
+
+const imgFor = name => `https://source.unsplash.com/800x600/?${encodeURIComponent(name+', India')}`;
+const grid=document.getElementById('grid'),search=document.getElementById('search'),stateFilter=document.getElementById('stateFilter'),sort=document.getElementById('sort'),resetBtn=document.getElementById('reset'),stats=document.getElementById('stats'),quickTags=document.getElementById('quickTags');
+const states=Array.from(new Set(PLACES.map(([,s])=>s))).sort();
+stateFilter.innerHTML='<option value="">Filter by State/UT</option>'+states.map(s=>`<option value="${s}">${s}</option>`).join('');
+quickTags.innerHTML=["Rajasthan","Uttarakhand","Himachal Pradesh","Kerala","Tamil Nadu","Gujarat","Jammu & Kashmir","Goa"].map(t=>`<button class="tag" data-tag="${t}">${t}</button>`).join('');
+quickTags.addEventListener('click',e=>{const btn=e.target.closest('[data-tag]');if(!btn)return;stateFilter.value=btn.dataset.tag;search.value='';render()});
+function sortData(list){const[by,dir]=sort.value.split('-'),mul=dir==='asc'?1:-1;return list.slice().sort((a,b)=>{if(by==='name')return a[0].localeCompare(b[0])*mul;if(by==='state')return a[1].localeCompare(b[1])*mul;return 0})}
+function filterData(){const q=search.value.trim().toLowerCase(),st=stateFilter.value;return PLACES.filter(([n,s])=>{const mt=!q||n.toLowerCase().includes(q)||s.toLowerCase().includes(q),ms=!st||s===st;return mt&&ms})}
+function card([n,s],i){return `<article class="card" data-name="${n}" data-state="${s}"><img src="${imgFor(n)}" alt="${n} in ${s}" loading="lazy" onerror="this.src='https://source.unsplash.com/800x600/?india,travel'"/><div class="chip">${i+1}</div><div class="overlay"><button class="view-btn" data-view>View</button></div><div class="content"><h3 class="place">${n}</h3><div class="state">${s}</div></div></article>`}
+function render(){const f=sortData(filterData());grid.innerHTML=f.map(card).join('');stats.textContent=`Showing ${f.length} of ${PLACES.length}`;observeCards()}
+let observer;function observeCards(){if(observer)observer.disconnect();observer=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{rootMargin:'80px'});document.querySelectorAll('.card').forEach(el=>observer.observe(el))}
+search.addEventListener('input',render);stateFilter.addEventListener('change',render);sort.addEventListener('change',render);resetBtn.addEventListener('click',()=>{search.value='';stateFilter.value='';sort.value='name-asc';render()});
+const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg'),lbTitle=document.getElementById('lbTitle'),lbCaption=document.getElementById('lbCaption'),lbClose=document.getElementById('lbClose');
+grid.addEventListener('click',e=>{const btn=e.target.closest('[data-view]'),c=e.target.closest('.card');if(btn&&c){const n=c.getAttribute('data-name'),s=c.getAttribute('data-state');lbTitle.textContent=n;lbImg.src=imgFor(n);lbImg.alt=`${n} in ${s}`;lbCaption.textContent=`${n} — ${s}, India`;lb.showModal()}});
+lbClose.addEventListener('click',()=>lb.close());lb.addEventListener('click',e=>{if(e.target===lb)lb.close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.open)lb.close()});
+render();
+```
